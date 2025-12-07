@@ -35,6 +35,10 @@ public abstract class Entity implements Renderable, Observer {
         this.equipment = equipmentSystem;
     }
 
+    public abstract void render();
+    public abstract void die();
+    public abstract int getReward();
+
     public void restoreHealth(int amount) {
         hp += amount;
 
@@ -66,16 +70,12 @@ public abstract class Entity implements Renderable, Observer {
         equipment.equip(item);
     }
 
-    public void unequipItem(Equippable item) {
-
+    public void unequipItem(EquipmentSlotType equipmentSlotType) {
+        equipment.unequip(equipmentSlotType);
     }
 
-    public abstract void render();
-    public abstract void die();
-    public abstract int getReward();
-
     public Container getBackpack() {
-        return equipment.getBackpack();
+        return (Container) equipment.get(EquipmentSlotType.BACK);
     }
 
     public void showInventory() {
