@@ -4,6 +4,7 @@ import core.GameContext;
 import entities.Entity;
 import items.Item;
 import systems.actions.Action;
+import systems.actions.OpenEquipmentAction;
 import systems.actions.StartCombatAction;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class GeneralActionProvider implements ActionProvider{
 
         actions.add(new StartCombatAction("Fight goblin", "goblin"));
         actions.add(new StartCombatAction("Fight orc", "orc"));
+        actions.add(new OpenEquipmentAction("Open Equipment", GameContext.getInstance().getPlayer().getEquipment()));
 
         return actions;
     }

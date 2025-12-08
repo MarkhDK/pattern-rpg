@@ -25,7 +25,7 @@ public class UnequipAction extends FreeAction {
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         entity.unequipItem(((Equippable) item).getType());
         entity.getBackpack().addItem(item);
     }

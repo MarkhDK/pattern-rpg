@@ -1,5 +1,5 @@
 package rendering;
 
-public interface Renderable {
+public interface Renderer {
     void render();
 }

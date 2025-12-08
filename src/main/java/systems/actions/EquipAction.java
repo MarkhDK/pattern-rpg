@@ -25,7 +25,7 @@ public class EquipAction extends FreeAction {
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         entity.equipItem((Equippable) item);
     }
 }

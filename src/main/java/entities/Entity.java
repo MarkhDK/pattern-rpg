@@ -6,13 +6,13 @@ import items.capabilities.Equippable;
 import items.capabilities.Usable;
 import items.equippable.EquipmentSlotType;
 import items.equippable.backItems.Backpack;
-import rendering.Renderable;
 import systems.EquipmentSystem;
+import systems.actions.providers.ActionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity implements Renderable, Observer {
+public abstract class Entity implements Observer {
     String name;
     int maxHp;
     int hp;

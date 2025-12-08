@@ -8,12 +8,13 @@ import items.capabilities.Equippable;
 import items.equippable.EquipmentSlotType;
 import systems.actions.Action;
 import systems.actions.AttackAction;
+import systems.actions.providers.ActionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Weapon extends Item implements Equippable, DamageRoller {
+public class Weapon extends Item implements Equippable, DamageRoller, ActionProvider {
     private int minDmg;
     private int maxDmg;
     private EquipmentSlotType slotType;
@@ -45,7 +46,7 @@ public class Weapon extends Item implements Equippable, DamageRoller {
     }
 
     @Override
-    public List<Action> getActions() {
+    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
         List<Action> actions = new ArrayList<>();
 
         if (GameContext.getInstance().getMode() == GameContext.Mode.COMBAT) {
@@ -53,10 +54,5 @@ public class Weapon extends Item implements Equippable, DamageRoller {
         }
 
         return actions;
-    }
-
-    @Override
-    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
-        return List.of();
     }
 }

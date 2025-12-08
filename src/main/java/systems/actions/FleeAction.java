@@ -13,7 +13,7 @@ public class FleeAction extends FreeAction{
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         GameContext.getInstance().setMode(GameContext.Mode.MAIN_MENU);
     }
 }

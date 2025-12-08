@@ -16,7 +16,7 @@ public class StartCombatAction extends FreeAction {
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         GameContext.getInstance().setMode(GameContext.Mode.COMBAT);
         GameContext.getInstance().getCombatSystem().combatLoop(GameContext.getInstance().getEnemyFactory().createEnemy(enemyType));
     }

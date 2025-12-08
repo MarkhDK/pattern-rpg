@@ -17,13 +17,21 @@ public class ActionRegistry {
     }
 
     public List<Action> getActions(Entity actor, Item focus, GameContext context) {
-        List<Action> result = new ArrayList<>();
+        List<Action> actions = new ArrayList<>();
 
         for (ActionProvider provider : providers) {
-            result.addAll(provider.getActions(actor, focus, context));
+            actions.addAll(provider.getActions(actor, focus, context));
         }
 
-        return result;
+        if (focus instanceof ActionProvider ap) {
+            actions.addAll(ap.getActions(actor, focus, context));
+        }
+
+        if (actor instanceof ActionProvider ep) {
+            actions.addAll(ep.getActions(actor, focus, context));
+        }
+
+        return actions;
     }
 
     public List<Action> getAvailableActions(Entity actor, Item focus, GameContext context) {

@@ -1,5 +1,5 @@
 package systems;
 
-public interface TurnObserver {
+public interface Ticker {
     void tick();
 }

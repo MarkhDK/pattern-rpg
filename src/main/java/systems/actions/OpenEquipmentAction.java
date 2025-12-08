@@ -22,7 +22,7 @@ public class OpenEquipmentAction extends FreeAction{
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         GameContext.getInstance().setActiveEquipmentSystem(equipment);
         GameContext.getInstance().setMode(GameContext.Mode.EQUIPMENT);
     }

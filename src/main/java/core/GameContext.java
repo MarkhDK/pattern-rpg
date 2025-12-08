@@ -4,6 +4,7 @@ import entities.Corpse;
 import entities.EnemyFactory;
 import entities.Entity;
 import items.capabilities.Container;
+import rendering.Renderer;
 import systems.CombatSystem;
 import systems.EquipmentSystem;
 
@@ -20,6 +21,7 @@ public class GameContext {
     private EnemyFactory enemyFactory;
     private Container activeContainer;
     private EquipmentSystem activeEquipmentSystem;
+    private Renderer renderer;
 
     private GameContext() {
         mode = Mode.MAIN_MENU;
@@ -32,6 +34,14 @@ public class GameContext {
             instance = new GameContext();
         }
         return instance;
+    }
+
+    public Renderer getRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(Renderer renderer) {
+        this.renderer = renderer;
     }
 
     public EquipmentSystem getActiveEquipmentSystem() {

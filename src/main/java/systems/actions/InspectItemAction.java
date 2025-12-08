@@ -16,7 +16,7 @@ public class InspectItemAction extends FreeAction{
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         item.inspect();
     }
 }

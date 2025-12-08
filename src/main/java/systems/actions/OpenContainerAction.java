@@ -22,7 +22,7 @@ public class OpenContainerAction extends FreeAction {
     }
 
     @Override
-    public void execute() {
+    public void perform() {
         GameContext.getInstance().setActiveContainer(container);
         GameContext.getInstance().setMode(GameContext.Mode.INVENTORY);
     }

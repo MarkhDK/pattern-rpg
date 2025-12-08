@@ -7,11 +7,12 @@ import items.capabilities.Consumable;
 import systems.Effect;
 import systems.actions.Action;
 import systems.actions.ConsumeAction;
+import systems.actions.providers.ActionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Potion extends Item implements Consumable {
+public class Potion extends Item implements Consumable, ActionProvider {
     private final Effect effect;
 
     public Potion(String name, float volume, Effect effect) {
@@ -33,7 +34,7 @@ public class Potion extends Item implements Consumable {
     }
 
     @Override
-    public List<Action> getActions() {
+    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
         List<Action> actions = new ArrayList<>();
 
         if (GameContext.getInstance().getMode() == GameContext.Mode.INSPECT_ITEM) {
@@ -41,10 +42,5 @@ public class Potion extends Item implements Consumable {
         }
 
         return actions;
-    }
-
-    @Override
-    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
-        return List.of();
     }
 }

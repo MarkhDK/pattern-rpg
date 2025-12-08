@@ -9,11 +9,12 @@ import items.equippable.EquipmentSlotType;
 import systems.InventorySystem;
 import systems.actions.Action;
 import systems.actions.InspectItemAction;
+import systems.actions.providers.ActionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Backpack extends Item implements Equippable, Container {
+public class Backpack extends Item implements Equippable, Container, ActionProvider {
     private InventorySystem inventory;
     private EquipmentSlotType slotType;
 
@@ -70,16 +71,11 @@ public class Backpack extends Item implements Equippable, Container {
     }
 
     @Override
-    public List<Action> getActions() {
+    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
         List<Action> actions = new ArrayList<>();
 
         actions.add(new InspectItemAction("Backpack", this));
 
         return actions;
-    }
-
-    @Override
-    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
-        return List.of();
     }
 }

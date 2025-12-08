@@ -35,8 +35,8 @@ public class Game {
         actionRegistry.registerProvider(new InventoryActionProvider());
         actionRegistry.registerProvider(new LootingActionProvider());
         actionRegistry.registerProvider(new GeneralActionProvider());
-        actionRegistry.registerProvider((ItemActionProvider) player.getBackpack());
-        actionRegistry.registerProvider((ItemActionProvider) player.getEquipment().getWeapon());
+        actionRegistry.registerProvider((ActionProvider) player.getBackpack());
+        actionRegistry.registerProvider((ActionProvider) player.getEquipment().getWeapon());
     }
 
     public void mainLoop() {

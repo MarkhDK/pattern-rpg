@@ -1,11 +1,20 @@
 package entities;
 
+import core.GameContext;
+import items.Item;
 import items.equippable.backItems.SmallBackpack;
 import items.equippable.weapons.RustySword;
+import systems.actions.Action;
+import systems.actions.OpenContainerAction;
+import systems.actions.OpenEquipmentAction;
+import systems.actions.providers.ActionProvider;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
-public class Player extends Entity {
+public class Player extends Entity implements ActionProvider {
     Scanner scanner = new Scanner(System.in);
     int level;
     int xp;
@@ -63,5 +72,20 @@ public class Player extends Entity {
     @Override
     public int getReward() {
         return 0;
+    }
+
+    @Override
+    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
+        List<Action> actions = new ArrayList<>();
+
+        if (getEquipment() != null) {
+            actions.add(new OpenEquipmentAction("Open Equipment", getEquipment()));
+        }
+
+        if (getBackpack() != null) {
+            actions.add(new OpenContainerAction("Open Inventory", getBackpack()));
+        }
+
+        return actions;
     }
 }
