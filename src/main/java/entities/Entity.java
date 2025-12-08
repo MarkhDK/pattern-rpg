@@ -35,10 +35,6 @@ public abstract class Entity implements Renderable, Observer {
         this.equipment = equipmentSystem;
     }
 
-    public abstract void render();
-    public abstract void die();
-    public abstract int getReward();
-
     public void restoreHealth(int amount) {
         hp += amount;
 
@@ -51,11 +47,19 @@ public abstract class Entity implements Renderable, Observer {
         hp -= dmg;
     }
 
-    public void attack(Entity attacker, Entity target) {
+    public void attack(Entity target) {
         String report = "%s dealt %,d damage to %s";
         int dmg = equipment.getWeapon().calculateDamage();
-        attackReport = String.format(report, attacker.getName(), dmg, target.getName());
+        attackReport = String.format(report, name, dmg, target.getName());
         target.takeDamage(dmg);
+    }
+
+    public boolean isAlive() {
+        return hp > 0;
+    }
+
+    public EquipmentSystem getEquipment() {
+        return equipment;
     }
 
     public Item getEquippedItem(EquipmentSlotType equipmentSlotType) {
@@ -99,4 +103,8 @@ public abstract class Entity implements Renderable, Observer {
     public int getHp() {
         return hp;
     }
+
+    public abstract void render();
+    public abstract void die();
+    public abstract int getReward();
 }

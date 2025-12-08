@@ -1,10 +1,16 @@
 package items.equippable.weapons;
 
+import core.GameContext;
+import entities.Entity;
 import items.Item;
 import items.capabilities.DamageRoller;
 import items.capabilities.Equippable;
 import items.equippable.EquipmentSlotType;
+import systems.actions.Action;
+import systems.actions.AttackAction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Weapon extends Item implements Equippable, DamageRoller {
@@ -28,5 +34,29 @@ public class Weapon extends Item implements Equippable, DamageRoller {
     @Override
     public int calculateDamage() {
         return rng.nextInt(minDmg, maxDmg);
+    }
+
+    @Override
+    public void inspect() {
+        GameContext.getInstance().setMode(GameContext.Mode.INSPECT_ITEM);
+        System.out.println("Weapon - " + getName());
+        System.out.println("Damage: " + minDmg + " - " + maxDmg);
+        System.out.println("Slot: " + slotType.toString());
+    }
+
+    @Override
+    public List<Action> getActions() {
+        List<Action> actions = new ArrayList<>();
+
+        if (GameContext.getInstance().getMode() == GameContext.Mode.COMBAT) {
+            actions.add(new AttackAction("Attack", GameContext.getInstance().getPlayer(), GameContext.getInstance().getEnemy()));
+        }
+
+        return actions;
+    }
+
+    @Override
+    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
+        return List.of();
     }
 }

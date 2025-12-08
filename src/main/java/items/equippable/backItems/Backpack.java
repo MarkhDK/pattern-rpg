@@ -1,10 +1,17 @@
 package items.equippable.backItems;
 
+import core.GameContext;
+import entities.Entity;
 import items.Item;
 import items.capabilities.Container;
 import items.capabilities.Equippable;
 import items.equippable.EquipmentSlotType;
 import systems.InventorySystem;
+import systems.actions.Action;
+import systems.actions.InspectItemAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Backpack extends Item implements Equippable, Container {
     private InventorySystem inventory;
@@ -44,5 +51,35 @@ public class Backpack extends Item implements Equippable, Container {
     @Override
     public Item getItem(int index) {
         return inventory.find(index);
+    }
+
+    @Override
+    public boolean contains(Item item) {
+        return inventory.contains(item);
+    }
+
+    @Override
+    public List<Item> getItems() {
+        return inventory.getItems();
+    }
+
+    @Override
+    public void inspect() {
+        GameContext.getInstance().setMode(GameContext.Mode.INSPECT_ITEM);
+        System.out.println("Backpack - " + getName());
+    }
+
+    @Override
+    public List<Action> getActions() {
+        List<Action> actions = new ArrayList<>();
+
+        actions.add(new InspectItemAction("Backpack", this));
+
+        return actions;
+    }
+
+    @Override
+    public List<Action> getActions(Entity actor, Item focus, GameContext context) {
+        return List.of();
     }
 }

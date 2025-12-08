@@ -1,5 +1,6 @@
 package entities;
 
+import core.GameContext;
 import items.Item;
 import items.equippable.EquipmentSlotType;
 import items.equippable.weapons.Weapon;
@@ -24,6 +25,7 @@ public class Enemy extends Entity{
     public void die() {
         this.equipment.getBackpack().addItem((Item) equipment.getWeapon());
         this.equipment.unequip(EquipmentSlotType.RIGHT_HAND);
+        GameContext.getInstance().addCorpse(this);
         notifyObservers();
     }
 

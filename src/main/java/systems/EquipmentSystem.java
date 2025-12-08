@@ -25,6 +25,16 @@ public class EquipmentSystem {
         equipment.put(EquipmentSlotType.GLOVES, new Slot<>());
     }
 
+    public boolean isEquipped(Item item) {
+        for (Slot<Equippable> slot : equipment.values()) {
+            if (slot.getItem() == item) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Item get(EquipmentSlotType equipmentSlotType) {
         return (Item) equipment.get(equipmentSlotType).getItem();
     }

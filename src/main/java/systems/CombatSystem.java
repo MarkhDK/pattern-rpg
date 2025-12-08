@@ -1,34 +1,58 @@
 package systems;
 
-import entities.Corpse;
+import core.Game;
+import core.GameContext;
 import entities.Entity;
 import entities.Observer;
 import entities.Player;
+import systems.actions.Action;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class CombatSystem implements Observer {
-    private static CombatSystem instance;
     private Entity player;
     private final Scanner scanner;
+    private final GameContext gameContext = GameContext.getInstance();
 
-    private CombatSystem() {
+    public CombatSystem(Entity player) {
         this.scanner = new Scanner(System.in);
-        this.player = Player.getInstance();
-        player.addObserver(this);
+        this.player = player;
     }
 
-    public static CombatSystem getInstance() {
-        if(instance == null) {
-            instance = new CombatSystem();
+    public void combatLoop(Entity enemy, ActionRegistry actionRegistry) {
+        gameContext.setMode(GameContext.Mode.COMBAT);
+        enemy.addObserver(player);
+
+        while(gameContext.getMode() == GameContext.Mode.COMBAT) {
+            clear();
+            player.render();
+            enemy.render();
+
+            List<Action> actions = actionRegistry.getAvailableActions(player, null, gameContext);
+            int userInput = scanner.nextInt();
+            actions.get(userInput).execute();
+
+            if (enemy.isAlive()) {
+                enemy.attack(player);
+
+                if (!player.isAlive()) {
+                    player.die();
+                    Game.running = false;
+                    gameContext.setMode(GameContext.Mode.MAIN_MENU);
+                }
+            } else {
+                enemy.die();
+                gameContext.setMode(GameContext.Mode.MAIN_MENU);
+            }
         }
-        return instance;
     }
 
     public Entity combatLoop(Entity enemy) {
+        gameContext.setMode(GameContext.Mode.COMBAT);
         enemy.addObserver(player);
 
-        while(player != null && enemy.getHp() > 0) {
+        while(gameContext.getMode() == GameContext.Mode.COMBAT) {
             clear();
             player.render();
             enemy.render();
@@ -39,20 +63,23 @@ public class CombatSystem implements Observer {
 
             switch (user_input) {
                 case 1:
-                    player.attack(player, enemy);
+                    player.attack(enemy);
                     break;
                 case 2:
+                    gameContext.setMode(GameContext.Mode.MAIN_MENU);
                     return null;
             }
 
             if(enemy.getHp() <= 0) {
                 enemy.die();
+                gameContext.setMode(GameContext.Mode.MAIN_MENU);
                 return enemy;
             } else {
-                enemy.attack(enemy, player);
+                enemy.attack(player);
 
                 if(player.getHp() <= 0) {
                     player.die();
+                    gameContext.setMode(GameContext.Mode.MAIN_MENU);
                     return player;
                 }
             }

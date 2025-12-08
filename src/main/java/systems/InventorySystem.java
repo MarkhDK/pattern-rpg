@@ -56,4 +56,12 @@ public class InventorySystem {
     public int count() {
         return items.size();
     }
+
+    public boolean contains(Item item) {
+        return items.contains(item);
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
 }

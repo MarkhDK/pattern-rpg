@@ -1,6 +1,11 @@
 package items;
 
-public abstract class Item {
+import systems.actions.Action;
+import systems.actions.providers.ItemActionProvider;
+
+import java.util.List;
+
+public abstract class Item implements ItemActionProvider {
     String name;
     float volume;
 
@@ -16,4 +21,7 @@ public abstract class Item {
     public float getVolume() {
         return volume;
     }
+
+    public abstract void inspect();
+    public abstract List<Action> getActions();
 }
